@@ -1,83 +1,79 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.34;
 
-enum CarType {
-    Sedan,
-    Truck,
-    Minivan
-}
+import "@openzeppelin/contracts/proxy/Clones.sol";
 
 contract Car {
-    CarType public immutable carType;
-    uint256 public immutable engineVolume;
-    uint8 public immutable seats;
-    uint256 public immutable payload;
+    enum CarType {
+        Sedan,
+        Truck,
+        Minivan
+    }
+
+    CarType public carType;
     string public color;
     uint256 public number;
 
-    constructor(CarType _carType, string memory _color, uint256 _number) {
-        carType = _carType;
-        color = _color;
-        number = _number;
+    bool private initialized;
 
-        if (_carType == CarType.Sedan) {
-            engineVolume = 2500;
-            seats = 5;
-            payload = 0;
-        } else if (_carType == CarType.Truck) {
-            engineVolume = 5000;
-            seats = 2;
-            payload = 1500;
-        } else {
-            engineVolume = 3500;
-            seats = 8;
-            payload = 300;
-        }
+    constructor(CarType _type) {
+        carType = _type;
+        initialized = true;
     }
 
-    function update(string memory _color, uint256 _number) external {
+    function init(string memory _color, uint256 _number) external {
+        require(!initialized, "Already initialized");
+
         color = _color;
         number = _number;
+
+        initialized = true;
     }
 }
 
-contract CarFabric {
-    // the only entry points for client
+contract CarFactory {
+    using Clones for address;
+
+    address public immutable sedanPrototype;
+    address public immutable truckPrototype;
+    address public immutable minivanPrototype;
+
+    constructor() {
+        sedanPrototype = address(new Car(Car.CarType.Sedan));
+        truckPrototype = address(new Car(Car.CarType.Truck));
+        minivanPrototype = address(new Car(Car.CarType.Minivan));
+    }
+
     function createSedan(
         string memory _color,
         uint256 _number
     ) external returns (address) {
-        return _clone(CarType.Sedan, _color, _number);
+        address clone = sedanPrototype.clone();
+
+        Car(clone).init(_color, _number);
+
+        return clone;
     }
 
     function createTruck(
         string memory _color,
         uint256 _number
     ) external returns (address) {
-        return _clone(CarType.Truck, _color, _number);
+        address clone = truckPrototype.clone();
+
+        Car(clone).init(_color, _number);
+
+        return clone;
     }
 
     function createMinivan(
         string memory _color,
         uint256 _number
     ) external returns (address) {
-        return _clone(CarType.Minivan, _color, _number);
-    }
+        address clone = minivanPrototype.clone();
 
-    function updateCar(
-        address _carAddress,
-        string memory _color,
-        uint256 _number
-    ) external {
-        Car(_carAddress).update(_color, _number);
-    }
+        Car(clone).init(_color, _number);
 
-    function _clone(
-        CarType _type,
-        string memory _color,
-        uint256 _number
-    ) private returns (address) {
-        Car car = new Car(_type, _color, _number);
-        return address(car);
+        return clone;
     }
 }
