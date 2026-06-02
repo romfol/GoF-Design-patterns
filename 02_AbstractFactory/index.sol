@@ -8,43 +8,67 @@ enum Cuisine {
 }
 
 abstract contract AbstractFactory {
-    function prepareComplexDinner()
-        external
-        pure
-        virtual
-        returns (string memory);
+    function prepareFirstDish() external pure virtual returns (string memory);
+
+    function prepareSecondDish() external pure virtual returns (string memory);
+
+    function prepareDessert() external pure virtual returns (string memory);
 }
 
 contract JapaneseCuisine is AbstractFactory {
-    function prepareComplexDinner()
+    function prepareFirstDish() external pure override returns (string memory) {
+        return "Your's Miso";
+    }
+
+    function prepareSecondDish()
         external
         pure
         override
         returns (string memory)
     {
-        return "Your's Japanese dinner";
+        return "Your's Ramen";
+    }
+
+    function prepareDessert() external pure override returns (string memory) {
+        return "Your's Mochi";
     }
 }
 
 contract AmericanCuisine is AbstractFactory {
-    function prepareComplexDinner()
+    function prepareFirstDish() external pure override returns (string memory) {
+        return "Your's clam chowder";
+    }
+
+    function prepareSecondDish()
         external
         pure
         override
         returns (string memory)
     {
-        return "Your's American dinner";
+        return "Your's Burger";
+    }
+
+    function prepareDessert() external pure override returns (string memory) {
+        return "Your's Apple Pie";
     }
 }
 
 contract UkrainianCuisine is AbstractFactory {
-    function prepareComplexDinner()
+    function prepareFirstDish() external pure override returns (string memory) {
+        return "Your's Borshch";
+    }
+
+    function prepareSecondDish()
         external
         pure
         override
         returns (string memory)
     {
-        return "Your's Ukrainian dinner";
+        return "Your's Varenyky";
+    }
+
+    function prepareDessert() external pure override returns (string memory) {
+        return "Your's Medivnyk";
     }
 }
 
@@ -65,10 +89,10 @@ contract Cafe {
         factory = _factory;
     }
 
-    function prepareComplexDinner(
-        Cuisine _cuisine
-    ) external returns (string memory) {
+    function prepareComplexDinner(Cuisine _cuisine) external {
         AbstractFactory cuisine = factory.create(_cuisine);
-        return cuisine.prepareComplexDinner();
+        cuisine.prepareFirstDish();
+        cuisine.prepareSecondDish();
+        cuisine.prepareDessert();
     }
 }
