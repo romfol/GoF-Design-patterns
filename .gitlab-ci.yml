@@ -7,7 +7,6 @@ stages:
   - build
   - test
 
-# Cache Foundry artifacts between runs
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
@@ -27,13 +26,5 @@ test:
   stage: test
   script:
     - forge test -vvv --gas-report
-  coverage:
-    - forge coverage --report lcov
   artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
-    paths:
-      - lcov.info
     expire_in: 1 week
