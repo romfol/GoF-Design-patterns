@@ -2,6 +2,8 @@ image: ghcr.io/foundry-rs/foundry:latest
 
 variables:
   FOUNDRY_PROFILE: ci
+  DEBIAN_FRONTEND: noninteractive
+  GIT_SUBMODULE_STRATEGY: recursive
 
 stages:
   - build
