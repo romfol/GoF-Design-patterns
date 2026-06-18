@@ -1,0 +1,6 @@
+# Foundry
+cache/
+out/
+broadcast/
+lcov.info
+coverage-report/

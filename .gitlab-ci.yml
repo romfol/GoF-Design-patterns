@@ -1,0 +1,42 @@
+image: ubuntu:22.04
+
+variables:
+  FOUNDRY_PROFILE: ci
+  DEBIAN_FRONTEND: noninteractive
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - build
+  - test
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - cache/
+    - out/
+    - /root/.foundry/bin/
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq curl git
+  - curl -L https://foundry.paradigm.xyz | bash
+  - export PATH="$PATH:/root/.foundry/bin"
+  - foundryup
+  - forge --version
+
+build:
+  stage: build
+  script:
+    - export PATH="$PATH:/root/.foundry/bin"
+    - forge build --sizes
+  artifacts:
+    paths:
+      - out/
+    expire_in: 1 hour
+
+test:
+  stage: test
+  script:
+    - export PATH="$PATH:/root/.foundry/bin"
+    - forge test -vvv
+  artifacts:
+    expire_in: 1 week
