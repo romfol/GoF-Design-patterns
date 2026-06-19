@@ -4,3 +4,6 @@ out/
 broadcast/
 lcov.info
 coverage-report/
+
+# config
+.vscode/
