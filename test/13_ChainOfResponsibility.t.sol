@@ -17,28 +17,34 @@ contract ChainOfResponsibilityTest is Test {
         police = new Police();
         medicalService = new MedicalService();
 
-        dispatcher = new EmergencyDispatcher(
-            IEmergencyService(address(fireDepartment)),
-            IEmergencyService(address(police)),
-            IEmergencyService(address(medicalService))
-        );
+        fireDepartment.setNext(police);
+        police.setNext(medicalService);
+
+        dispatcher = new EmergencyDispatcher(fireDepartment);
     }
 
-    function testDispatchFireDepartment() public {
-        string memory response = dispatcher.dispatch(EmergencyType.FIRE);
+    function testFireEmergency() public {
+        string memory result = dispatcher.dispatch(EmergencyType.FIRE);
 
-        assertEq(response, "Fire department dispatched");
+        assertEq(result, "Fire department dispatched");
     }
 
-    function testDispatchPolice() public {
-        string memory response = dispatcher.dispatch(EmergencyType.CRIME);
+    function testPoliceEmergency() public {
+        string memory result = dispatcher.dispatch(EmergencyType.CRIME);
 
-        assertEq(response, "Police dispatched");
+        assertEq(result, "Police dispatched");
     }
 
-    function testDispatchMedicalService() public {
-        string memory response = dispatcher.dispatch(EmergencyType.MEDICAL);
+    function testMedicalEmergency() public {
+        string memory result = dispatcher.dispatch(EmergencyType.MEDICAL);
 
-        assertEq(response, "Medical service dispatched");
+        assertEq(result, "Medical service dispatched");
+    }
+
+    function testEmergencyNotHandled() public {
+        police.setNext(IEmergencyHandler(address(0)));
+
+        vm.expectRevert();
+        dispatcher.dispatch(EmergencyType.MEDICAL);
     }
 }

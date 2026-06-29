@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.34;
 
+error UnknownEmergency();
+
 enum EmergencyType {
     FIRE,
     CRIME,
     MEDICAL
 }
 
-error UnknownEmergency();
-
-interface IEmergencyService {
-    function handleEmergency() external returns (string memory);
+interface IEmergencyHandler {
+    function setNext(IEmergencyHandler next) external;
+    function handle(
+        EmergencyType emergencyType
+    ) external returns (string memory);
 }
