@@ -17,16 +17,9 @@ contract StatePatternTest is Test {
         ready = new ReadyState();
         overheat = new OverheatState();
 
-        cold.setStates(address(ready), address(overheat));
-
-        ready.setStates(address(cold), address(overheat));
-
-        overheat.setStates(address(ready), address(cold));
-
-        oven = new Oven(IOvenState(address(cold)));
+        oven = new Oven(cold, ready, overheat);
     }
-
-    function testInitialStateIsCold() public {
+    function testInitialStateIsCold() public view {
         assertEq(address(oven.state()), address(cold));
     }
 

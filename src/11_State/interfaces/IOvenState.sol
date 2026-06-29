@@ -9,7 +9,7 @@ interface IOvenState {
     error OvenIsCold();
     error OvenOverheated();
 
-    function setStates(address _ready, address _cold) external;
+    function setStates(IOvenState _ready, IOvenState _cold) external;
     function bake(address oven) external returns (string memory);
     function goReady(address oven) external;
     function goCold(address oven) external;

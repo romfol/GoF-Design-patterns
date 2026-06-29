@@ -7,8 +7,12 @@ import "./interfaces/IOvenState.sol";
 contract Oven is IOven {
     IOvenState public state;
 
-    constructor(IOvenState initialState) {
-        state = initialState;
+    constructor(IOvenState cold, IOvenState ready, IOvenState overheat) {
+        cold.setStates(ready, overheat);
+        ready.setStates(cold, overheat);
+        overheat.setStates(ready, cold);
+
+        state = cold;
     }
 
     function setState(IOvenState newState) external {
@@ -33,12 +37,10 @@ contract Oven is IOven {
 }
 
 contract ColdState is IOvenState {
-    address public ready;
-    address public overheat;
+    IOvenState public ready;
+    IOvenState public overheat;
 
-    bool public initialized;
-
-    function setStates(address _ready, address _overheat) external {
+    function setStates(IOvenState _ready, IOvenState _overheat) external {
         ready = _ready;
         overheat = _overheat;
     }
@@ -48,7 +50,7 @@ contract ColdState is IOvenState {
     }
 
     function goReady(address oven) external {
-        Oven(oven).setState(IOvenState(ready));
+        Oven(oven).setState(ready);
     }
 
     function goCold(address) external {
@@ -56,19 +58,17 @@ contract ColdState is IOvenState {
     }
 
     function goOverheat(address oven) external {
-        Oven(oven).setState(IOvenState(overheat));
+        Oven(oven).setState(overheat);
     }
 }
 
 contract ReadyState is IOvenState {
-    address public cold;
-    address public overheat;
+    IOvenState public cold;
+    IOvenState public overheat;
 
-    bool public initialized;
-
-    function setStates(address coldState, address overheatState) external {
-        cold = coldState;
-        overheat = overheatState;
+    function setStates(IOvenState _cold, IOvenState _overheat) external {
+        cold = _cold;
+        overheat = _overheat;
     }
 
     function bake(address) external pure returns (string memory dish) {
@@ -80,21 +80,19 @@ contract ReadyState is IOvenState {
     }
 
     function goCold(address oven) external {
-        Oven(oven).setState(IOvenState(cold));
+        Oven(oven).setState(cold);
     }
 
     function goOverheat(address oven) external {
-        Oven(oven).setState(IOvenState(overheat));
+        Oven(oven).setState(overheat);
     }
 }
 
 contract OverheatState is IOvenState {
-    address public ready;
-    address public cold;
+    IOvenState public ready;
+    IOvenState public cold;
 
-    bool public initialized;
-
-    function setStates(address _ready, address _cold) external {
+    function setStates(IOvenState _ready, IOvenState _cold) external {
         ready = _ready;
         cold = _cold;
     }
@@ -104,11 +102,11 @@ contract OverheatState is IOvenState {
     }
 
     function goReady(address oven) external {
-        Oven(oven).setState(IOvenState(ready));
+        Oven(oven).setState(ready);
     }
 
     function goCold(address oven) external {
-        Oven(oven).setState(IOvenState(cold));
+        Oven(oven).setState(cold);
     }
 
     function goOverheat(address) external {
