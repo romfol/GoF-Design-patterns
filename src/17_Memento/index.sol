@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.34;
 
+error InvalidVersion();
+
 contract TextEditor {
     struct Memento {
         string content;
@@ -15,6 +17,7 @@ contract TextEditor {
     }
 
     function restore(uint256 version) external {
+        require(version < history.length, InvalidVersion());
         document = history[version].content;
     }
 
