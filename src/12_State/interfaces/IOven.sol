@@ -2,6 +2,7 @@
 pragma solidity 0.8.34;
 
 import "./IOvenState.sol";
+
 interface IOven {
     function state() external view returns (IOvenState);
     function setState(IOvenState newState) external;

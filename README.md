@@ -1,8 +1,10 @@
 # Design Patterns in Solidity
 
+[![CI](https://github.com/romfol/GoF-Design-patterns/actions/workflows/ci.yml/badge.svg)](https://github.com/romfol/GoF-Design-patterns/actions/workflows/ci.yml)
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.34-363636?logo=solidity)](https://soliditylang.org/)
 [![Foundry](https://img.shields.io/badge/Built%20with-Foundry-FFDB1C)](https://getfoundry.sh/)
 [![Tests](https://img.shields.io/badge/tests-138%20passing-brightgreen)](#testing)
+[![Coverage](https://img.shields.io/badge/coverage-97%25-brightgreen)](#testing)
 [![Patterns](https://img.shields.io/badge/patterns-19-blue)](#patterns)
 [![GitHub stars](https://img.shields.io/github/stars/romfol/GoF-Design-patterns?style=social)](https://github.com/romfol/GoF-Design-patterns)
 
@@ -125,6 +127,29 @@ forge test
 
 ```text
 Ran 19 test suites: 138 tests passed, 0 failed, 0 skipped (138 total tests)
+```
+
+Line coverage is currently **97%**. Generate the full report locally with:
+
+```shell
+forge coverage --report summary --report lcov
+```
+
+## Continuous integration
+
+Every push and pull request to `main` runs the GitHub Actions workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml):
+
+- `forge fmt --check` to enforce formatting,
+- `forge build --sizes` to catch build and contract-size issues,
+- `forge test -vvv` to run the full suite,
+- `forge coverage` to publish an `lcov.info` artifact.
+
+Run the same checks locally before opening a PR:
+
+```shell
+forge fmt
+forge build --sizes
+forge test
 ```
 
 ## Example

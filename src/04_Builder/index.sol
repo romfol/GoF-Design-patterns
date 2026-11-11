@@ -9,14 +9,7 @@ contract Pizza {
     bool public mushrooms;
     bool public seafood;
 
-    constructor(
-        string memory _name,
-        bool _cheese,
-        bool _bacon,
-        bool _pineapple,
-        bool _mushrooms,
-        bool _seafood
-    ) {
+    constructor(string memory _name, bool _cheese, bool _bacon, bool _pineapple, bool _mushrooms, bool _seafood) {
         name = _name;
         cheese = _cheese;
         bacon = _bacon;
@@ -70,14 +63,7 @@ contract Builder {
             name = "TOP";
         }
 
-        Pizza pizza = new Pizza(
-            name,
-            config.cheese,
-            config.bacon,
-            config.pineapple,
-            config.mushrooms,
-            config.seafood
-        );
+        Pizza pizza = new Pizza(name, config.cheese, config.bacon, config.pineapple, config.mushrooms, config.seafood);
 
         delete configs[msg.sender];
 

@@ -15,9 +15,7 @@ abstract contract EmergencyHandler is IEmergencyHandler {
         nextHandler = next;
     }
 
-    function handle(
-        EmergencyType emergencyType
-    ) external returns (string memory) {
+    function handle(EmergencyType emergencyType) external returns (string memory) {
         if (emergencyType == supportedType) {
             return process();
         }
@@ -63,9 +61,7 @@ contract EmergencyDispatcher {
         firstHandler = _firstHandler;
     }
 
-    function dispatch(
-        EmergencyType emergencyType
-    ) external returns (string memory) {
+    function dispatch(EmergencyType emergencyType) external returns (string memory) {
         return firstHandler.handle(emergencyType);
     }
 }

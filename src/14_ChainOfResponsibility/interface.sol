@@ -11,7 +11,5 @@ enum EmergencyType {
 
 interface IEmergencyHandler {
     function setNext(IEmergencyHandler next) external;
-    function handle(
-        EmergencyType emergencyType
-    ) external returns (string memory);
+    function handle(EmergencyType emergencyType) external returns (string memory);
 }

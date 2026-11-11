@@ -19,6 +19,7 @@ contract StatePatternTest is Test {
 
         oven = new Oven(cold, ready, overheat);
     }
+
     function testInitialStateIsCold() public view {
         assertEq(address(oven.state()), address(cold));
     }

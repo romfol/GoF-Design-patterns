@@ -21,11 +21,7 @@ contract Car {
         initialized = true;
     }
 
-    function init(
-        CarType _type,
-        string memory _color,
-        uint256 _number
-    ) external {
+    function init(CarType _type, string memory _color, uint256 _number) external {
         require(!initialized, "Already initialized");
 
         carType = _type;
@@ -49,10 +45,7 @@ contract CarFactory {
         minivanPrototype = address(new Car(Car.CarType.Minivan));
     }
 
-    function createSedan(
-        string memory _color,
-        uint256 _number
-    ) external returns (address) {
+    function createSedan(string memory _color, uint256 _number) external returns (address) {
         address clone = sedanPrototype.clone();
 
         Car(clone).init(Car.CarType.Sedan, _color, _number);
@@ -60,10 +53,7 @@ contract CarFactory {
         return clone;
     }
 
-    function createTruck(
-        string memory _color,
-        uint256 _number
-    ) external returns (address) {
+    function createTruck(string memory _color, uint256 _number) external returns (address) {
         address clone = truckPrototype.clone();
 
         Car(clone).init(Car.CarType.Truck, _color, _number);
@@ -71,10 +61,7 @@ contract CarFactory {
         return clone;
     }
 
-    function createMinivan(
-        string memory _color,
-        uint256 _number
-    ) external returns (address) {
+    function createMinivan(string memory _color, uint256 _number) external returns (address) {
         address clone = minivanPrototype.clone();
 
         Car(clone).init(Car.CarType.Minivan, _color, _number);

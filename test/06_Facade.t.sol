@@ -17,12 +17,8 @@ contract FacadeTest is Test {
         multiplyService = new MultiplyService();
         divideService = new DivideService();
 
-        facade = new Facade(
-            address(addService),
-            address(subtractService),
-            address(multiplyService),
-            address(divideService)
-        );
+        facade =
+            new Facade(address(addService), address(subtractService), address(multiplyService), address(divideService));
     }
 
     // ─── Add ─────────────────────────────────────────────────────

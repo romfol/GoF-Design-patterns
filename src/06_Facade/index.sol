@@ -41,12 +41,15 @@ contract Facade {
     function add(int256 a, int256 b) external view returns (int256) {
         return _add.add(a, b);
     }
+
     function subtract(int256 a, int256 b) external view returns (int256) {
         return _sub.subtract(a, b);
     }
+
     function multiply(int256 a, int256 b) external view returns (int256) {
         return _mul.multiply(a, b);
     }
+
     function divide(int256 a, int256 b) external view returns (int256) {
         return _div.divide(a, b);
     }

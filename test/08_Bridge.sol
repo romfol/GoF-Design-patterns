@@ -94,12 +94,7 @@ contract BridgeTest is Test {
     // ─── Cafe Full Dinner ────────────────────────────────────────
 
     function test_Cafe_JapaneseDinner() public {
-        string[4] memory menu = cafe.prepareComplexDinner(
-            firstDish,
-            secondDish,
-            thirdDish,
-            dessert
-        );
+        string[4] memory menu = cafe.prepareComplexDinner(firstDish, secondDish, thirdDish, dessert);
 
         assertEq(menu[0], "Miso Soup");
         assertEq(menu[1], "Ramen");
@@ -113,12 +108,7 @@ contract BridgeTest is Test {
         thirdDish.setImpl(americanCuisine);
         dessert.setImpl(americanCuisine);
 
-        string[4] memory menu = cafe.prepareComplexDinner(
-            firstDish,
-            secondDish,
-            thirdDish,
-            dessert
-        );
+        string[4] memory menu = cafe.prepareComplexDinner(firstDish, secondDish, thirdDish, dessert);
 
         assertEq(menu[0], "Clam Chowder");
         assertEq(menu[1], "Burger");
@@ -132,12 +122,7 @@ contract BridgeTest is Test {
         thirdDish.setImpl(ukrainianCuisine);
         dessert.setImpl(ukrainianCuisine);
 
-        string[4] memory menu = cafe.prepareComplexDinner(
-            firstDish,
-            secondDish,
-            thirdDish,
-            dessert
-        );
+        string[4] memory menu = cafe.prepareComplexDinner(firstDish, secondDish, thirdDish, dessert);
 
         assertEq(menu[0], "Borshch");
         assertEq(menu[1], "Varenyky");
@@ -149,12 +134,7 @@ contract BridgeTest is Test {
 
     function test_SwitchCuisine_SameDishContracts() public {
         // Japanese dinner first
-        string[4] memory japanese = cafe.prepareComplexDinner(
-            firstDish,
-            secondDish,
-            thirdDish,
-            dessert
-        );
+        string[4] memory japanese = cafe.prepareComplexDinner(firstDish, secondDish, thirdDish, dessert);
         assertEq(japanese[0], "Miso Soup");
 
         // Switch all dishes to Ukrainian — same contract addresses
@@ -163,12 +143,7 @@ contract BridgeTest is Test {
         thirdDish.setImpl(ukrainianCuisine);
         dessert.setImpl(ukrainianCuisine);
 
-        string[4] memory ukrainian = cafe.prepareComplexDinner(
-            firstDish,
-            secondDish,
-            thirdDish,
-            dessert
-        );
+        string[4] memory ukrainian = cafe.prepareComplexDinner(firstDish, secondDish, thirdDish, dessert);
         assertEq(ukrainian[0], "Borshch");
     }
 
@@ -180,12 +155,7 @@ contract BridgeTest is Test {
         thirdDish.setImpl(americanCuisine); // Apple Pie
         dessert.setImpl(ukrainianCuisine); // Pampushky
 
-        string[4] memory menu = cafe.prepareComplexDinner(
-            firstDish,
-            secondDish,
-            thirdDish,
-            dessert
-        );
+        string[4] memory menu = cafe.prepareComplexDinner(firstDish, secondDish, thirdDish, dessert);
 
         assertEq(menu[0], "Borshch");
         assertEq(menu[1], "Ramen");

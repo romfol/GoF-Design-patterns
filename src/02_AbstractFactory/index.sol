@@ -20,12 +20,7 @@ contract JapaneseCuisine is AbstractFactory {
         return "Your's Miso";
     }
 
-    function prepareSecondDish()
-        external
-        pure
-        override
-        returns (string memory)
-    {
+    function prepareSecondDish() external pure override returns (string memory) {
         return "Your's Ramen";
     }
 
@@ -39,12 +34,7 @@ contract AmericanCuisine is AbstractFactory {
         return "Your's clam chowder";
     }
 
-    function prepareSecondDish()
-        external
-        pure
-        override
-        returns (string memory)
-    {
+    function prepareSecondDish() external pure override returns (string memory) {
         return "Your's Burger";
     }
 
@@ -58,12 +48,7 @@ contract UkrainianCuisine is AbstractFactory {
         return "Your's Borshch";
     }
 
-    function prepareSecondDish()
-        external
-        pure
-        override
-        returns (string memory)
-    {
+    function prepareSecondDish() external pure override returns (string memory) {
         return "Your's Varenyky";
     }
 

@@ -20,10 +20,7 @@ contract CacheTest is Test {
         divideService = new DivideService();
 
         calculator = new Calculator(
-            address(addService),
-            address(subtractService),
-            address(multiplyService),
-            address(divideService)
+            address(addService), address(subtractService), address(multiplyService), address(divideService)
         );
 
         cache = new Cache(address(calculator));

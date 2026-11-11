@@ -20,10 +20,7 @@ contract Concierge is IMediator {
         flowers.setMediator(this);
     }
 
-    function requestService(
-        ServiceType serviceType,
-        address customer
-    ) external override {
+    function requestService(ServiceType serviceType, address customer) external override {
         if (serviceType == ServiceType.TAXI) {
             taxi.perform(customer);
         } else if (serviceType == ServiceType.HOME_REPAIR) {
@@ -33,10 +30,7 @@ contract Concierge is IMediator {
         }
     }
 
-    function notifyCustomer(
-        address customer,
-        string calldata message
-    ) external {
+    function notifyCustomer(address customer, string calldata message) external {
         emit CustomerNotified(customer, message);
     }
 }

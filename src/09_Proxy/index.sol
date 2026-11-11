@@ -48,22 +48,16 @@ contract Calculator is ICalculator {
     function add(int256 a, int256 b) external view override returns (int256) {
         return _add.add(a, b);
     }
-    function subtract(
-        int256 a,
-        int256 b
-    ) external view override returns (int256) {
+
+    function subtract(int256 a, int256 b) external view override returns (int256) {
         return _sub.subtract(a, b);
     }
-    function multiply(
-        int256 a,
-        int256 b
-    ) external view override returns (int256) {
+
+    function multiply(int256 a, int256 b) external view override returns (int256) {
         return _mul.multiply(a, b);
     }
-    function divide(
-        int256 a,
-        int256 b
-    ) external view override returns (int256) {
+
+    function divide(int256 a, int256 b) external view override returns (int256) {
         return _div.divide(a, b);
     }
 }
@@ -143,11 +137,7 @@ contract Cache is ICalculator {
         return result;
     }
 
-    function _getKey(
-        string memory operation,
-        int256 a,
-        int256 b
-    ) internal pure returns (bytes32) {
+    function _getKey(string memory operation, int256 a, int256 b) internal pure returns (bytes32) {
         return keccak256(abi.encode(operation, a, b));
     }
 }

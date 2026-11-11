@@ -31,16 +31,10 @@ contract DecoratorTest is Test {
     }
 
     function testFullCustomPizza() public {
-        SeafoodDecorator seafood = new SeafoodDecorator(
-            new MushroomDecorator(
-                new BaconDecorator(new CheeseDecorator(new Pizza()))
-            )
-        );
+        SeafoodDecorator seafood =
+            new SeafoodDecorator(new MushroomDecorator(new BaconDecorator(new CheeseDecorator(new Pizza()))));
 
-        assertEq(
-            seafood.getDescription(),
-            "Pizza with Cheese,Bacon,Mushroom,Seafood,"
-        );
+        assertEq(seafood.getDescription(), "Pizza with Cheese,Bacon,Mushroom,Seafood,");
     }
 
     function testDifferentOrderProducesDifferentResult() public {

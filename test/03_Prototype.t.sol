@@ -14,18 +14,9 @@ contract PrototypeTest is Test {
     // ─── Prototypes ──────────────────────────────────────────────
 
     function test_PrototypesAreDeployedWithCorrectType() public view {
-        assertEq(
-            uint256(Car(factory.sedanPrototype()).carType()),
-            uint256(Car.CarType.Sedan)
-        );
-        assertEq(
-            uint256(Car(factory.truckPrototype()).carType()),
-            uint256(Car.CarType.Truck)
-        );
-        assertEq(
-            uint256(Car(factory.minivanPrototype()).carType()),
-            uint256(Car.CarType.Minivan)
-        );
+        assertEq(uint256(Car(factory.sedanPrototype()).carType()), uint256(Car.CarType.Sedan));
+        assertEq(uint256(Car(factory.truckPrototype()).carType()), uint256(Car.CarType.Truck));
+        assertEq(uint256(Car(factory.minivanPrototype()).carType()), uint256(Car.CarType.Minivan));
     }
 
     function test_PrototypeCannotBeInitialized() public {

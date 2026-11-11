@@ -37,9 +37,7 @@ contract BuilderPatternTest is Test {
     }
 
     function testBuildCustomPizza() public {
-        Pizza pizza = Pizza(
-            builder.addCheese().addMushrooms().addSeafood().build()
-        );
+        Pizza pizza = Pizza(builder.addCheese().addMushrooms().addSeafood().build());
 
         assertEq(pizza.name(), "MEDIUM");
         assertTrue(pizza.cheese());
