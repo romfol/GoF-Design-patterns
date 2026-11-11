@@ -3,7 +3,7 @@ pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
 
-import "../src/13_ChainOfResponsibility/index.sol";
+import "../src/14_ChainOfResponsibility/index.sol";
 
 contract ChainOfResponsibilityTest is Test {
     EmergencyDispatcher dispatcher;

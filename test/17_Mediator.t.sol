@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/16_Mediator/index.sol";
+import "../src/17_Mediator/index.sol";
 
 contract MediatorPatternTest is Test {
     IService taxi;

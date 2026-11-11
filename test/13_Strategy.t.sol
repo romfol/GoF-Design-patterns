@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/12_Strategy/index.sol";
+import "../src/13_Strategy/index.sol";
 
 contract StrategyTest is Test {
     Sorter sorter;

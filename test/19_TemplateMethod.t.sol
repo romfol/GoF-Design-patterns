@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/18_TemplateMethod/index.sol";
+import "../src/19_TemplateMethod/index.sol";
 
 contract TemplateMethodTest is Test {
     DateWriter dateWriter;

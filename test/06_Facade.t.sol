@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/05_Facade/index.sol";
+import "../src/06_Facade/index.sol";
 
 contract FacadeTest is Test {
     AddService addService;
