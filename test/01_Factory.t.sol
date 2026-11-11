@@ -5,6 +5,8 @@ import "forge-std/Test.sol";
 import "../src/01_Factory/index.sol";
 
 contract FactoryTest is Test {
+    event Deployed(address indexed instance, Dish dish);
+
     Factory factory;
 
     function setUp() public {
@@ -14,30 +16,50 @@ contract FactoryTest is Test {
     // ─── init() ──────────────────────────────────────────────────
 
     function test_InitSushiReturnsSushi() public {
-        address dish = factory.init(Dish.Sushi);
+        Oven oven = factory.init(Dish.Sushi);
 
-        assertGt(dish.code.length, 0);
-        assertEq(Oven(dish).bake(), "your's sushi");
+        assertGt(address(oven).code.length, 0);
+        assertEq(oven.bake(), "yours, sushi");
     }
 
     function test_InitPizzaReturnsPizza() public {
-        address dish = factory.init(Dish.Pizza);
+        Oven oven = factory.init(Dish.Pizza);
 
-        assertGt(dish.code.length, 0);
-        assertEq(Oven(dish).bake(), "your's pizza");
+        assertGt(address(oven).code.length, 0);
+        assertEq(oven.bake(), "yours, pizza");
     }
 
     function test_EachInitDeploysNewInstance() public {
-        address first = factory.init(Dish.Sushi);
-        address second = factory.init(Dish.Sushi);
+        Oven first = factory.init(Dish.Sushi);
+        Oven second = factory.init(Dish.Sushi);
 
-        assertTrue(first != second);
+        assertTrue(address(first) != address(second));
     }
 
     function test_SushiAndPizzaAreDifferentContracts() public {
-        address sushi = factory.init(Dish.Sushi);
-        address pizza = factory.init(Dish.Pizza);
+        Oven sushi = factory.init(Dish.Sushi);
+        Oven pizza = factory.init(Dish.Pizza);
 
-        assertTrue(sushi != pizza);
+        assertTrue(address(sushi) != address(pizza));
+    }
+
+    // ─── Deployed event ──────────────────────────────────────────
+
+    function test_InitEmitsDeployedForSushi() public {
+        address expected = vm.computeCreateAddress(address(factory), vm.getNonce(address(factory)));
+
+        vm.expectEmit(true, true, true, true, address(factory));
+        emit Deployed(expected, Dish.Sushi);
+
+        factory.init(Dish.Sushi);
+    }
+
+    function test_InitEmitsDeployedForPizza() public {
+        address expected = vm.computeCreateAddress(address(factory), vm.getNonce(address(factory)));
+
+        vm.expectEmit(true, true, true, true, address(factory));
+        emit Deployed(expected, Dish.Pizza);
+
+        factory.init(Dish.Pizza);
     }
 }

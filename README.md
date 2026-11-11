@@ -3,7 +3,7 @@
 [![CI](https://github.com/romfol/GoF-Design-patterns/actions/workflows/ci.yml/badge.svg)](https://github.com/romfol/GoF-Design-patterns/actions/workflows/ci.yml)
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.34-363636?logo=solidity)](https://soliditylang.org/)
 [![Foundry](https://img.shields.io/badge/Built%20with-Foundry-FFDB1C)](https://getfoundry.sh/)
-[![Tests](https://img.shields.io/badge/tests-138%20passing-brightgreen)](#testing)
+[![Tests](https://img.shields.io/badge/tests-140%20passing-brightgreen)](#testing)
 [![Coverage](https://img.shields.io/badge/coverage-97%25-brightgreen)](#testing)
 [![Patterns](https://img.shields.io/badge/patterns-19-blue)](#patterns)
 [![GitHub stars](https://img.shields.io/github/stars/romfol/GoF-Design-patterns?style=social)](https://github.com/romfol/GoF-Design-patterns)
@@ -17,7 +17,7 @@ If you learn something here, a star helps others find it.
 ## Why this repository
 
 - **19 patterns**, each isolated in its own numbered folder.
-- **138 passing tests** covering happy paths, edge cases, and reverts.
+- **140 passing tests** covering happy paths, edge cases, and reverts.
 - **Real Solidity**, not pseudocode — enums, immutables, interfaces, modifiers, clones, and OpenZeppelin primitives.
 - **Consistent structure** so you can compare patterns side by side.
 - **Small contracts** you can copy into your own project and adapt.
@@ -113,7 +113,7 @@ forge snapshot               # gas snapshot
 
 ## Testing
 
-Every pattern has a dedicated Forge test suite. The suite currently covers **138 tests**, including:
+Every pattern has a dedicated Forge test suite. The suite currently covers **140 tests**, including:
 
 - expected behaviour and state transitions,
 - access control and ownership,
@@ -126,7 +126,7 @@ forge test
 ```
 
 ```text
-Ran 19 test suites: 138 tests passed, 0 failed, 0 skipped (138 total tests)
+Ran 19 test suites: 140 tests passed, 0 failed, 0 skipped (140 total tests)
 ```
 
 Line coverage is currently **97%**. Generate the full report locally with:

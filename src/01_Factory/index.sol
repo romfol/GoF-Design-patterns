@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-
 pragma solidity 0.8.34;
 
 enum Dish {
@@ -8,29 +7,32 @@ enum Dish {
 }
 
 contract Factory {
-    function init(Dish _dish) external returns (address) {
-        Dish dish = _dish;
+    event Deployed(address indexed instance, Dish dish);
 
-        if (dish == Dish.Sushi) {
-            return address(new Sushi());
+    function init(Dish _dish) external returns (Oven) {
+        Oven oven;
+        if (_dish == Dish.Sushi) {
+            oven = new Sushi();
         } else {
-            return address(new Pizza());
+            oven = new Pizza();
         }
+        emit Deployed(address(oven), _dish);
+        return oven;
     }
 }
 
 abstract contract Oven {
-    function bake() external pure virtual returns (string memory);
+    function bake() public pure virtual returns (string memory);
 }
 
 contract Sushi is Oven {
-    function bake() external pure override returns (string memory dish) {
-        dish = "your's sushi";
+    function bake() public pure override returns (string memory) {
+        return "yours, sushi";
     }
 }
 
 contract Pizza is Oven {
-    function bake() external pure override returns (string memory dish) {
-        dish = "your's pizza";
+    function bake() public pure override returns (string memory) {
+        return "yours, pizza";
     }
 }
