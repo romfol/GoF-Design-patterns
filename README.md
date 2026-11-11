@@ -1,66 +1,175 @@
-## Foundry
+# Design Patterns in Solidity
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+[![Solidity](https://img.shields.io/badge/Solidity-0.8.34-363636?logo=solidity)](https://soliditylang.org/)
+[![Foundry](https://img.shields.io/badge/Built%20with-Foundry-FFDB1C)](https://getfoundry.sh/)
+[![Tests](https://img.shields.io/badge/tests-138%20passing-brightgreen)](#testing)
+[![Patterns](https://img.shields.io/badge/patterns-19-blue)](#patterns)
+[![GitHub stars](https://img.shields.io/github/stars/romfol/GoF-Design-patterns?style=social)](https://github.com/romfol/GoF-Design-patterns)
 
-Foundry consists of:
+The Gang of Four (GoF) design patterns, implemented in **Solidity** with **Foundry** and **OpenZeppelin** — one folder per pattern, one test suite per pattern, no fluff.
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Most design-pattern resources are written in Java, C#, or TypeScript. This repository shows what those patterns actually look like on-chain: contracts, interfaces, storage, clones, access control, and gas-aware composition. Every pattern is small enough to read in one sitting and tested so you can see the behaviour, not just the UML.
 
-## Documentation
+If you learn something here, a star helps others find it.
 
-https://book.getfoundry.sh/
+## Why this repository
 
-## Usage
+- **19 patterns**, each isolated in its own numbered folder.
+- **138 passing tests** covering happy paths, edge cases, and reverts.
+- **Real Solidity**, not pseudocode — enums, immutables, interfaces, modifiers, clones, and OpenZeppelin primitives.
+- **Consistent structure** so you can compare patterns side by side.
+- **Small contracts** you can copy into your own project and adapt.
 
-### Build
+## Patterns
 
-```shell
-$ forge build
+| # | Pattern | Category | Example in this repo |
+|---|---------|----------|----------------------|
+| 01 | [Factory](src/01_Factory/index.sol) | Creational | `Factory.init(Dish)` deploys a `Sushi` or `Pizza` oven |
+| 02 | [Abstract Factory](src/02_AbstractFactory/index.sol) | Creational | `CuisineFactory` creates Japanese, American, or Ukrainian menus |
+| 03 | [Prototype](src/03_Prototype/index.sol) | Creational | `CarFactory` clones prototypes with OpenZeppelin `Clones` |
+| 04 | [Builder](src/04_Builder/index.sol) | Creational | Fluent per-user pizza builder with `addCheese().addBacon().build()` |
+| 05 | [Multitone](src/05_Multitone/index.sol) | Creational | Owner-controlled registry capped at 10 instances |
+| 06 | [Facade](src/06_Facade/index.sol) | Structural | One calculator facade over add/subtract/multiply/divide services |
+| 07 | [Adapter](src/07_Adapter/index.sol) | Structural | `DeutscherRechner` adapted to the `ICalculator` interface |
+| 08 | [Bridge](src/08_Bridge/index.sol) | Structural | Cuisine implementations bridged with dish abstractions |
+| 09 | [Proxy](src/09_Proxy/index.sol) | Structural | Caching proxy around the calculator |
+| 10 | [Decorator](src/10_Decorator/index.sol) | Structural | Stackable pizza toppings |
+| 11 | [Observer](src/11_Observer/index.sol) | Behavioural | Storm warnings pushed to a school, airport, and road service |
+| 12 | [State](src/12_State/index.sol) | Behavioural | Oven transitions between cold, ready, and overheat states |
+| 13 | [Strategy](src/13_Strategy/index.sol) | Behavioural | Swappable bubble-sort and quick-sort strategies |
+| 14 | [Chain of Responsibility](src/14_ChainOfResponsibility/index.sol) | Behavioural | Emergency dispatcher routes fire, police, and medical events |
+| 15 | [Command](src/15_Command/index.sol) | Behavioural | Pizza order built from command objects |
+| 16 | [Visitor](src/16_Visitor/index.sol) | Behavioural | `RecipeVisitor` walks pizza ingredients |
+| 17 | [Mediator](src/17_Mediator/index.sol) | Behavioural | Concierge coordinating taxi, repair, and flower services |
+| 18 | [Memento](src/18_Memento/index.sol) | Behavioural | `TextEditor` with versioned snapshots and restore |
+| 19 | [Template Method](src/19_TemplateMethod/index.sol) | Behavioural | File writers sharing a fixed `write()` algorithm |
+
+### Learning path
+
+1. **Creational** (`01`–`05`) — how objects and contract instances are created.
+2. **Structural** (`06`–`10`) — how contracts are composed and wrapped.
+3. **Behavioural** (`11`–`19`) — how contracts communicate and delegate behaviour.
+
+## Repository structure
+
+```text
+.
+├── src/
+│   ├── 01_Factory/index.sol
+│   ├── 02_AbstractFactory/index.sol
+│   ├── 03_Prototype/index.sol
+│   ├── ...
+│   └── 19_TemplateMethod/index.sol
+├── test/
+│   ├── 01_Factory.t.sol
+│   ├── 02_AbstractFactory.t.sol
+│   ├── 03_Prototype.t.sol
+│   ├── ...
+│   └── 19_TemplateMethod.t.sol
+├── lib/
+│   ├── forge-std/
+│   └── openzeppelin-contracts/
+├── foundry.toml
+└── remappings.txt
 ```
 
-### Test
+Each pattern lives in `src/NN_PatternName/index.sol`. Its tests live in `test/NN_PatternName.t.sol`, so implementation and behaviour stay in sync.
+
+## Getting started
+
+### Requirements
+
+- [Foundry](https://book.getfoundry.sh/getting-started/installation)
+- Git
+
+### Clone and run
 
 ```shell
-$ forge test
+git clone --recurse-submodules git@github.com:romfol/GoF-Design-patterns.git
+cd GoF-Design-patterns
+
+forge build
+forge test
 ```
 
-### Format
+If you already cloned without submodules:
 
 ```shell
-$ forge fmt
+git submodule update --init --recursive
 ```
 
-### Gas Snapshots
+### Useful commands
 
 ```shell
-$ forge snapshot
+forge build                  # compile contracts
+forge test                   # run all tests
+forge test -vvv              # run tests with traces
+forge test --match-path test/13_Strategy.t.sol
+forge fmt                    # format Solidity
+forge snapshot               # gas snapshot
 ```
 
-### Anvil
+## Testing
+
+Every pattern has a dedicated Forge test suite. The suite currently covers **138 tests**, including:
+
+- expected behaviour and state transitions,
+- access control and ownership,
+- invalid inputs and reverts,
+- independent instances and isolation between users,
+- clone and prototype semantics.
 
 ```shell
-$ anvil
+forge test
 ```
 
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```text
+Ran 19 test suites: 138 tests passed, 0 failed, 0 skipped (138 total tests)
 ```
 
-### Cast
+## Example
 
-```shell
-$ cast <subcommand>
+The Builder keeps per-user configuration and returns the builder for chaining:
+
+```solidity
+Pizza pizza = Pizza(
+    builder.addCheese().addBacon().addMushrooms().build()
+);
 ```
 
-### Help
+The Strategy pattern swaps sorting algorithms behind one interface:
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```solidity
+Sorter sorter = new Sorter(new QuickSort());
+sorter.sort(values);
+
+sorter.setStrategy(new BubbleSort());
+sorter.sort(values);
 ```
+
+See the matching contracts and tests for the rest.
+
+## Contributing
+
+Contributions are welcome:
+
+1. Add a new pattern in `src/NN_PatternName/index.sol`.
+2. Add tests in `test/NN_PatternName.t.sol`.
+3. Run `forge fmt` and `forge test`.
+4. Open a pull request describing the pattern and its on-chain trade-offs.
+
+Bug fixes, clearer examples, and better tests are just as valuable as new patterns.
+
+## Acknowledgements
+
+- [Foundry](https://github.com/foundry-rs/foundry) for the fast Solidity toolchain.
+- [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts) for `Ownable` and `Clones`.
+- The Gang of Four for the original catalogue.
+
+## License
+
+Each source file declares its own SPDX license (`MIT` or `GPL-3.0`) in its header. Check the file you intend to reuse.
+
+---
+
+If this repository helped you understand design patterns in Solidity, consider starring it so more developers can find it.
