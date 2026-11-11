@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/04_Multitone/index.sol";
+import "../src/05_Multitone/index.sol";
 
 contract MultitoneTest is Test {
     Multitone multitone;

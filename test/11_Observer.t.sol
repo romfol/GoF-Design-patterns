@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/10_Observer/index.sol";
+import "../src/11_Observer/index.sol";
 
 contract ObserverTest is Test {
     StormWarningService service;

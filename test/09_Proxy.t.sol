@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/08_Proxy/index.sol";
+import "../src/09_Proxy/index.sol";
 
 contract CacheTest is Test {
     AddService addService;

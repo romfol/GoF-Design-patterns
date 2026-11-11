@@ -2,7 +2,7 @@
 pragma solidity 0.8.34;
 
 import "forge-std/Test.sol";
-import "../src/17_Memento/index.sol";
+import "../src/18_Memento/index.sol";
 
 contract MementoPatternTest is Test {
     TextEditor editor;
